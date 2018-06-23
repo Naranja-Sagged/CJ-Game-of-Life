@@ -5,19 +5,20 @@ using UnityEngine.UI;
 
 //This script runs continuously while scene is active
 public class GameMananger : MonoBehaviour {
-    GameObject[] movers;
     GameObject[] pauseObjects;
+    GameObject[] movers;
     bool paused = false;
 
 
     // Use this for initialization
     void Start () {
-        //Finds every object with th tag ShowOnPause
+        //Finds every object with the tag ShowOnPause
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
-        movers = GameObject.FindGameObjectsWithTag("Mover");
         foreach (GameObject g in pauseObjects){
             g.SetActive(false);
         }
+        //Finds every object with fake (GameObject) tag "Mover"
+        movers = GameObject.FindGameObjectsWithTag("Mover");
 
     }
 
@@ -29,10 +30,17 @@ public class GameMananger : MonoBehaviour {
             if (!paused){
                 paused = true;
                 Time.timeScale = 0.0F;
+
+                //Iterates through each object with fake (GameObject) tag "Mover"
                 foreach (GameObject gs in movers) {
+                    //
                     GameObject realObject = gs.transform.parent.gameObject;
-                    realObject.GetComponent<PlayerMovement>().enabled = false;
+                    MonoBehaviour[] scripts = realObject.GetComponents<MonoBehaviour>();
+                    foreach (MonoBehaviour m in scripts) {
+                        m.enabled = false;
+                    }
                 }
+
                 foreach (GameObject g in pauseObjects){
                     g.SetActive(true);
                 }
