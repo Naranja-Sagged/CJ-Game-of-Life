@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ShowOnPause
   - Mover
+  - Ground
   layers:
   - Default
   - TransparentFX

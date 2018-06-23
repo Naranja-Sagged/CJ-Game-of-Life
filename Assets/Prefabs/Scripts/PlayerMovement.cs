@@ -34,9 +34,13 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
     void OnCollisionEnter2D(Collision2D col) {
-        isGrounded = true;
+        if (col.gameObject.tag == "Ground") {
+            isGrounded = true;
+        }
     }
     void OnCollisionExit2D(Collision2D col) {
-        isGrounded = false;
+        if (col.gameObject.tag == "Ground") {
+            isGrounded = false;
+        }
     }
 }
