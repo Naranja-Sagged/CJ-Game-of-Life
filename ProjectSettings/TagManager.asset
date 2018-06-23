@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - ShowOnPause
+  - Mover
   layers:
   - Default
   - TransparentFX

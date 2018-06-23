@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 //This script runs continuously while scene is active
 public class GameMananger : MonoBehaviour {
-
+    GameObject[] movers;
     GameObject[] pauseObjects;
     bool paused = false;
 
@@ -14,6 +14,7 @@ public class GameMananger : MonoBehaviour {
     void Start () {
         //Finds every object with th tag ShowOnPause
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        movers = GameObject.FindGameObjectsWithTag("Mover");
         foreach (GameObject g in pauseObjects){
             g.SetActive(false);
         }
@@ -28,6 +29,10 @@ public class GameMananger : MonoBehaviour {
             if (!paused){
                 paused = true;
                 Time.timeScale = 0.0F;
+                foreach (GameObject gs in movers) {
+                    GameObject realObject = gs.transform.parent.gameObject;
+                    realObject.GetComponent<PlayerMovement>().enabled = false;
+                }
                 foreach (GameObject g in pauseObjects){
                     g.SetActive(true);
                 }
