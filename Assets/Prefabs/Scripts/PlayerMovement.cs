@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
     public float speed;
     float speedDelta = 150;
-
+    float maxVelocity;
     bool isGrounded = false;
     Rigidbody2D rb;
     GameObject player;
+
     // Use this for initialization
     void Start() {
+        maxVelocity = speed * 2;
         player = GameObject.FindGameObjectWithTag("Player");
         rb = player.GetComponent<Rigidbody2D>();
 
@@ -19,10 +21,15 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        movementCheck();
+        movementCommands();
+        maxVelocityCheck();
     }
+    void maxVelocityCheck() {
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
+    }
+
     //Checks for left, right, and jump movement
-    void movementCheck() {
+    void movementCommands() {
         if (Input.GetKey(KeyCode.D)) { 
             player.transform.position = (Vector2)player.transform.position + Vector2.right * (speed / speedDelta);
         }
@@ -37,12 +44,14 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
     }
+
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Ground") {
             Debug.Log("enter");
             isGrounded = true;
         }
     }
+
     void OnCollisionExit2D(Collision2D col) {
         if (col.gameObject.tag == "Ground") {
             Debug.Log("exit");
