@@ -6,11 +6,11 @@ public class PlayerMovement : MonoBehaviour {
     public float speed;
     float speedDelta = 150;
     GameObject player;
-    CapsuleCollider2D playerCollider;
+    BoxCollider2D playerCollider;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerCollider = player.GetComponent<CapsuleCollider2D>();
+        playerCollider = player.GetComponent<BoxCollider2D>();
 
     }
 	
@@ -24,8 +24,8 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.Space)) {
             float distFromGround = playerCollider.bounds.extents.y;
-            bool isGrounded = Physics.Raycast(transform.position, Vector3.down, distFromGround + 1.0f);
-            if (!isGrounded) {
+            RaycastHit2D isGrounded = Physics2D.Raycast(player.transform.position, Vector2.down, distFromGround);
+            if (isGrounded) {
                 player.transform.position = (Vector2)player.transform.position + Vector2.up * ((speed + 1) / speedDelta);
             }
         }
