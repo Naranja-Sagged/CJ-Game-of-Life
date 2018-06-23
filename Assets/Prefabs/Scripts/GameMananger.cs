@@ -33,8 +33,9 @@ public class GameMananger : MonoBehaviour {
 
                 //Iterates through each object with fake (GameObject) tag "Mover"
                 foreach (GameObject gs in movers) {
-                    //
+                    //Takes the parent of the empty GameObject tagged with "Mover", which is the real object
                     GameObject realObject = gs.transform.parent.gameObject;
+
                     MonoBehaviour[] scripts = realObject.GetComponents<MonoBehaviour>();
                     foreach (MonoBehaviour m in scripts) {
                         m.enabled = false;
@@ -57,6 +58,17 @@ public class GameMananger : MonoBehaviour {
         Time.timeScale = 1.0F;
         foreach (GameObject g in pauseObjects){
             g.SetActive(false);
+        }
+
+        foreach (GameObject gs in movers)
+        {
+            GameObject realObject = gs.transform.parent.gameObject;
+
+            MonoBehaviour[] scripts = realObject.GetComponents<MonoBehaviour>();
+            foreach (MonoBehaviour m in scripts)
+            {
+                m.enabled = true;
+            }
         }
     }
 }
