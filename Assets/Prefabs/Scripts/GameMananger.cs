@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script runs continuously while scene is active
 public class GameMananger : MonoBehaviour {
 
 	// Use this for initialization
