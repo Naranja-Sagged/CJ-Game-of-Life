@@ -19,6 +19,10 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        movementCheck();
+    }
+    //Checks for left, right, and jump movement
+    void movementCheck() {
         if (Input.GetKey(KeyCode.D)) { 
             player.transform.position = (Vector2)player.transform.position + Vector2.right * (speed / speedDelta);
         }
@@ -35,11 +39,13 @@ public class PlayerMovement : MonoBehaviour {
     }
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Ground") {
+            Debug.Log("enter");
             isGrounded = true;
         }
     }
     void OnCollisionExit2D(Collision2D col) {
         if (col.gameObject.tag == "Ground") {
+            Debug.Log("exit");
             isGrounded = false;
         }
     }
