@@ -1,16 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class Quit : MonoBehaviour {
+    public void OnApplicationQuit(){
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+        Console.WriteLine("Quit is working");
+    }
 }
