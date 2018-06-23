@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ChangeSceneOnClick : MonoBehaviour {
-    public string sceneName = "CharacterSelection";
+    public string sceneName;
+    public string buttonName;
     void Start() {
-        GameObject gaymeObject = GameObject.Find("Play");
+        GameObject gaymeObject = GameObject.Find(buttonName);
         Button button = gaymeObject.GetComponent<Button>();
         button.onClick.AddListener(TaskOnClick);
     }
