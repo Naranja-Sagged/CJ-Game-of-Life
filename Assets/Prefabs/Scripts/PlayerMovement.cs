@@ -19,11 +19,12 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() { 
         movementCommands();
         maxVelocityCheck();
     }
+
+    //Limits a character's velocity
     void maxVelocityCheck() {
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
     }

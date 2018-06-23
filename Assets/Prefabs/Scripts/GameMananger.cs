@@ -25,7 +25,7 @@ public class GameMananger : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         //If the key pressed is the escape button
-        if (Input.GetKeyDown(KeyCode.Escape)){
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             //Pause the game
             if (!paused){
                 paused = true;
@@ -33,7 +33,7 @@ public class GameMananger : MonoBehaviour {
 
                 scriptController(false);
 
-                foreach (GameObject g in pauseObjects){
+                foreach (GameObject g in pauseObjects) {
                     g.SetActive(true);
                 }
             }
@@ -43,15 +43,17 @@ public class GameMananger : MonoBehaviour {
             }
         }
 	}
+
     //Pressed the continue button so resume game
     public void resume() {
         paused = false;
         Time.timeScale = 1.0F;
-        foreach (GameObject g in pauseObjects){
+        foreach (GameObject g in pauseObjects) {
             g.SetActive(false);
         }
         scriptController(true);
     }
+
     //If true, enable scripts. False, disable scripts.
     public void scriptController(bool onOff) {
         //Iterates through each object with fake (GameObject) tag "Mover"
