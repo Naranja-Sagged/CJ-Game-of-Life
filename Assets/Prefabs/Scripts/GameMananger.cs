@@ -12,6 +12,7 @@ public class GameMananger : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        
         //Finds every object with the tag ShowOnPause
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
         foreach (GameObject g in pauseObjects){
@@ -19,6 +20,8 @@ public class GameMananger : MonoBehaviour {
         }
         //Finds every object with fake (GameObject) tag "Mover"
         movers = GameObject.FindGameObjectsWithTag("Mover");
+
+        resume();
 
     }
 
