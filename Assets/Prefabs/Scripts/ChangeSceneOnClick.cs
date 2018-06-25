@@ -10,7 +10,9 @@ public class ChangeSceneOnClick : MonoBehaviour {
     public string buttonName;
 
     void Start() {
+
         GameObject gaymeObject = GameObject.Find(buttonName);
+
         Button button = gaymeObject.GetComponent<Button>();
         //Makes button interactable
         button.onClick.AddListener(TaskOnClick);
@@ -18,5 +20,6 @@ public class ChangeSceneOnClick : MonoBehaviour {
 
     void TaskOnClick() { 
         SceneManager.LoadScene(sceneName);
+        
     }
 }
