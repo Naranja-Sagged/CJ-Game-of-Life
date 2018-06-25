@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour {
     Rigidbody2D rb;
     GameObject player;
 
+    SpriteRenderer spriteRenderer;
+
     Animator animator;
     bool isWalking = false; //Not actual animator parameter
 
@@ -25,6 +27,8 @@ public class PlayerMovement : MonoBehaviour {
         maxVelocity = speed * 2;
         player = GameObject.FindGameObjectWithTag("Player");
         rb = player.GetComponent<Rigidbody2D>();
+
+        spriteRenderer = player.GetComponent<SpriteRenderer>();
 
         animator = player.GetComponent<Animator>();
         animator.SetFloat("Speed", (speed / speedDelta) * 25);
@@ -77,12 +81,12 @@ public class PlayerMovement : MonoBehaviour {
             case command.walkRight:
                 animator.SetBool("isWalking", true);
                 isWalking = true;
-                animator.SetBool("walkingLeft", false);
+                spriteRenderer.flipX = false;
                 break;
             case command.walkLeft:
                 animator.SetBool("isWalking", true);
                 isWalking = true;
-                animator.SetBool("walkingLeft", true);
+                spriteRenderer.flipX = true;
                 break;
             case command.jump:
                 if (isWalking) {
@@ -91,7 +95,7 @@ public class PlayerMovement : MonoBehaviour {
                 else {
                     animator.SetBool("isWalking", false);
                 }
-                animator.SetBool("walkingLeft", false);
+                spriteRenderer.flipX = false;
                 break;
         }
     }
