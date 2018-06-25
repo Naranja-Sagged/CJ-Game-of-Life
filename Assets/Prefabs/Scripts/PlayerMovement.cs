@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         if (Input.GetKey(KeyCode.Space) && isGrounded) {
+            rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(0, 100f) * ((25 * speed) / speedDelta));
             setAnimatorBool(command.jump);
         }
