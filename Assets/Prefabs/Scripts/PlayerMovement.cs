@@ -11,8 +11,10 @@ public class PlayerMovement : MonoBehaviour {
     GameObject player;
 
     Animator animator;
+    bool isWalking = false; //Not actual animator parameter
 
     enum command {
+        none,
         walkRight,
         walkLeft,
         jump
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour {
         rb = player.GetComponent<Rigidbody2D>();
 
         animator = player.GetComponent<Animator>();
+        animator.SetFloat("Speed", (speed / speedDelta) * 25);
     }
 
     // Update is called once per frame
@@ -48,9 +51,13 @@ public class PlayerMovement : MonoBehaviour {
             setAnimatorBool(command.walkRight);
         }
 
-        if (Input.GetKey(KeyCode.A)) {
+        else if (Input.GetKey(KeyCode.A)) {
             player.transform.position = (Vector2)player.transform.position + Vector2.left * (speed / speedDelta);
             setAnimatorBool(command.walkLeft);
+        }
+
+        else {
+            setAnimatorBool(command.none);
         }
 
         if (Input.GetKey(KeyCode.Space) && isGrounded) {
@@ -63,16 +70,27 @@ public class PlayerMovement : MonoBehaviour {
 
     void setAnimatorBool(command command) {
         switch (command) {
+            case command.none:
+                isWalking = false;
+                animator.SetBool("isWalking", false);
+                break;
             case command.walkRight:
                 animator.SetBool("isWalking", true);
+                isWalking = true;
                 animator.SetBool("walkingLeft", false);
                 break;
             case command.walkLeft:
                 animator.SetBool("isWalking", true);
+                isWalking = true;
                 animator.SetBool("walkingLeft", true);
                 break;
             case command.jump:
-                animator.SetBool("isWalking", false);
+                if (isWalking) {
+                    animator.SetBool("isWalking", true);
+                }
+                else {
+                    animator.SetBool("isWalking", false);
+                }
                 animator.SetBool("walkingLeft", false);
                 break;
         }
