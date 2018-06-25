@@ -7,6 +7,7 @@ TagManager:
   - ShowOnPause
   - Mover
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX
