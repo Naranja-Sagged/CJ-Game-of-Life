@@ -10,8 +10,9 @@ public class PlayerMovement : MonoBehaviour {
     Rigidbody2D rb;
     GameObject player;
 
-    SpriteRenderer spriteRenderer;
+    List<BoxCollider2D> playerColliders = new List<BoxCollider2D>();
 
+    SpriteRenderer spriteRenderer;
     Animator animator;
     bool isWalking = false; //Not actual animator parameter
 
@@ -32,6 +33,8 @@ public class PlayerMovement : MonoBehaviour {
 
         animator = player.GetComponent<Animator>();
         animator.SetFloat("Speed", (speed / speedDelta) * 25);
+
+        initializePlayerColliders();
     }
 
     // Update is called once per frame
@@ -71,7 +74,6 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     //Directly modifies animator parameters
-
     void setAnimatorBool(command command) {
         switch (command) {
             case command.none:
@@ -101,18 +103,47 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     //=========================================================================
-    //Controls whether the player is grounded or not
+    //When player collides with another object, these functions are called
     //=========================================================================
 
+    //When player collides
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Ground") {
             isGrounded = true;
         }
+
+        ignoreCollisionCheck(col);
     }
 
+    //When player exits collision
     void OnCollisionExit2D(Collision2D col) {
         if (col.gameObject.tag == "Ground") {
             isGrounded = false;
+        }
+    }
+
+    //=========================================================================
+    //Ignores collision between Player and Enemies
+    //=========================================================================
+
+    void initializePlayerColliders() {
+        foreach (Transform child in transform) {
+            if (child.gameObject.GetComponent<BoxCollider2D>() != null) {
+                playerColliders.Add(child.gameObject.GetComponent<BoxCollider2D>());
+            }
+        }
+    }
+
+    //Ignores collision between given collider (Collision2D.collider) and all of player's colliders (including children objects) if Enemy
+    void ignoreCollisionCheck(Collision2D col) {
+        if (col.gameObject.tag == "Enemy") {
+
+            //Because playerColliders does not include the collider of the GameObject tagged "Player", I ignore collision of that here
+            Physics2D.IgnoreCollision(col.collider, gameObject.GetComponent<BoxCollider2D>());
+
+            foreach (Collider2D collider in playerColliders) {
+                Physics2D.IgnoreCollision(col.collider, collider);
+            }
         }
     }
 }

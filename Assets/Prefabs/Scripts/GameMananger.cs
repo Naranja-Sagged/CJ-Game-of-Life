@@ -7,48 +7,64 @@ using UnityEngine.UI;
 public class GameMananger : MonoBehaviour {
     GameObject[] pauseObjects;
     GameObject[] movers;
+
     bool paused = false;
 
 
     // Use this for initialization
     void Start () {
-        
-        //Finds every object with the tag ShowOnPause
-        pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
-        foreach (GameObject g in pauseObjects){
-            g.SetActive(false);
-        }
-        //Finds every object with fake (GameObject) tag "Mover"
-        movers = GameObject.FindGameObjectsWithTag("Mover");
-
-        resume();
-
+        initializePauseObjects();
     }
 
     // Update is called once per frame
     void Update () {
+        pauseCheck();
+	}
+
+    //=========================================================================
+    //These functions are for the pause function in game
+    //=========================================================================
+
+    void initializePauseObjects() {
+        //Finds every object with the tag ShowOnPause
+        pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        foreach (GameObject g in pauseObjects)
+        {
+            g.SetActive(false);
+        }
+        //Finds every object with fake (GameObject) tag "Mover"
+        movers = GameObject.FindGameObjectsWithTag("Mover");
+        //Ensures game doesn't start paused
+        resume();
+    }
+
+    void pauseCheck() {
         //If the key pressed is the escape button
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             //Pause the game
-            if (!paused){
+            if (!paused)
+            {
                 paused = true;
                 Time.timeScale = 0.0F;
 
                 scriptController(false);
 
-                foreach (GameObject g in pauseObjects) {
+                foreach (GameObject g in pauseObjects)
+                {
                     g.SetActive(true);
                 }
             }
             //It's already paused so go back to game
-            else {
+            else
+            {
                 resume();
             }
         }
-	}
+    }
 
     //Pressed the continue button so resume game
-    public void resume() {
+    void resume() {
         paused = false;
         Time.timeScale = 1.0F;
         foreach (GameObject g in pauseObjects) {
@@ -58,7 +74,7 @@ public class GameMananger : MonoBehaviour {
     }
 
     //If true, enable scripts. False, disable scripts.
-    public void scriptController(bool onOff) {
+    void scriptController(bool onOff) {
         //Iterates through each object with fake (GameObject) tag "Mover"
         foreach (GameObject gs in movers)
         {
