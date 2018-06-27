@@ -43,15 +43,11 @@ public class PlayerMovement : MonoBehaviour {
         maxVelocityCheck();
     }
 
-    //Limits a character's velocity
-    void maxVelocityCheck() {
-        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
-    }
-
     //=========================================================================
+    //Functions used for player movement
+    //=========================================================================
+
     //Checks for left, right, and jump movement
-    //=========================================================================
-
     void getMovementCommands() {
         if (Input.GetKey(KeyCode.D)) { 
             player.transform.position = (Vector2)player.transform.position + Vector2.right * (speed / speedDelta);
@@ -102,6 +98,11 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    //Limits a character's velocity
+    void maxVelocityCheck() {
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
+    }
+
     //=========================================================================
     //When player collides with another object, these functions are called
     //=========================================================================
@@ -123,7 +124,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     //=========================================================================
-    //Ignores collision between Player and Enemies
+    //Functions for ignoring collision between Player and Enemies
     //=========================================================================
 
     void initializePlayerColliders() {
