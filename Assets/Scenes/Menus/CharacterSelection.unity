@@ -2139,7 +2139,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1276656706}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16680f1f5701f3f449b5caab22ba1a3f, type: 3}
   m_Name: 
@@ -2186,7 +2186,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 974130198}
-        m_MethodName: Select
+        m_MethodName: changeScene
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

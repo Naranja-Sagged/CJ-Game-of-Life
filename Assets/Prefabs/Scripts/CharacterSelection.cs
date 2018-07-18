@@ -7,14 +7,17 @@ public class CharacterSelection : MonoBehaviour {
 
     private List<GameObject> characterList;
     //Default index
-    private int selectionIndex = 0;
+    private int index;
     public void Start() {
+        index = PlayerPrefs.GetInt("CharacterSelected");
         characterList = new List<GameObject>();
         //Turns off the character unless it is chosen
         foreach (Transform t in transform) {
             characterList.Add(t.gameObject);
             t.gameObject.SetActive(false);
         }
+        characterList[index].SetActive(true);
+
     }
     public void Update() {
 
@@ -24,9 +27,11 @@ public class CharacterSelection : MonoBehaviour {
             return;
         }
         PlayerPrefs.SetInt("CharacterSelected", index);
-        characterList[selectionIndex].SetActive(false);
-        selectionIndex = index;
-        characterList[selectionIndex].SetActive(true);
+        characterList[index].SetActive(true);
 
     }
- }
+    public void changeScene(int index) {
+        SceneManager.LoadScene("TestLevel");
+        index = PlayerPrefs.GetInt("CharacterSelected");
+    }
+}
