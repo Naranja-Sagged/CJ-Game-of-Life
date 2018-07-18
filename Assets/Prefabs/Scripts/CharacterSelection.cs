@@ -16,8 +16,10 @@ public class CharacterSelection : MonoBehaviour {
             characterList.Add(t.gameObject);
             t.gameObject.SetActive(false);
         }
-        characterList[index].SetActive(true);
-
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name != "CharacterSelection") {
+            characterList[index].SetActive(true);
+        }
     }
     public void Update() {
 
@@ -32,6 +34,6 @@ public class CharacterSelection : MonoBehaviour {
     }
     public void changeScene(int index) {
         SceneManager.LoadScene("TestLevel");
-        index = PlayerPrefs.GetInt("CharacterSelected");
+        PlayerPrefs.SetInt("CharacterSelected", index);
     }
 }
