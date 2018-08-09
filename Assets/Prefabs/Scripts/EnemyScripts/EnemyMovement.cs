@@ -1,15 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyMovement : MonoBehaviour {
 
     List<BoxCollider2D> enemyColliders = new List<BoxCollider2D>();
 
+    List<GameObject> allObjects = new List<GameObject>();
+
+
     // Use this for initialization
     void Start () {
         initializeEnemyColliders();
-	}
+
+        // Initialize all GameObjects in scene
+        Scene scene = SceneManager.GetActiveScene();
+        scene.GetRootGameObjects(allObjects);
+
+        IgnoreEnemyCollision();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,7 +32,6 @@ public class EnemyMovement : MonoBehaviour {
 
     //When enemy collides
     void OnCollisionEnter2D(Collision2D col) {
-        ignoreCollisionCheck(col);
     }
 
     //When enemy exits collision
@@ -41,15 +50,23 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
-    //Ignores collision between given collider (Collision2D.collider) and all of player's colliders (including children objects) if Enemy
-    void ignoreCollisionCheck(Collision2D col) {
-        if (col.gameObject.tag == "Enemy") {
+    // Checks all game objects in the scene for enemy and ignores collision with player
+    void IgnoreEnemyCollision() {
+        foreach (GameObject obj in allObjects) {
+            if (obj.gameObject.tag == "Enemy") {
+                IgnoreCollision(obj);
+            }
+        }
+    }
 
-            //Because enemyColliders does not include the collider of the GameObject tagged "Enemy", I ignore collision of that here
-            Physics2D.IgnoreCollision(col.collider, gameObject.GetComponent<BoxCollider2D>());
+    // Ignore all of a given object's colliders whole list playerColliders
+    void IgnoreCollision(GameObject obj) {
+        foreach (BoxCollider2D boxCol in obj.GetComponentsInChildren<BoxCollider2D>()) {
+            // Because playerColliders does not include the collider of the GameObject tagged "Player", I ignore collision of that here
+            Physics2D.IgnoreCollision(boxCol, gameObject.GetComponent<BoxCollider2D>());
 
-            foreach (Collider2D collider in enemyColliders) {
-                Physics2D.IgnoreCollision(col.collider, collider);
+            foreach (BoxCollider2D collider in enemyColliders) {
+                Physics2D.IgnoreCollision(boxCol, collider);
             }
         }
     }
