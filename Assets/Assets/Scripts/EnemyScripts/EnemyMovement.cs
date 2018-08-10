@@ -7,17 +7,9 @@ public class EnemyMovement : MonoBehaviour {
 
     List<BoxCollider2D> enemyColliders = new List<BoxCollider2D>();
 
-    List<GameObject> allObjects = new List<GameObject>();
-
-
     // Use this for initialization
     void Start () {
         initializeEnemyColliders();
-
-        // Initialize all GameObjects in scene
-        Scene scene = SceneManager.GetActiveScene();
-        scene.GetRootGameObjects(allObjects);
-
         IgnoreEnemyCollision();
     }
 	
@@ -27,19 +19,19 @@ public class EnemyMovement : MonoBehaviour {
 	}
 
     //=========================================================================
-    //When enemy collides with another object, these functions are called
+    // When enemy collides with another object, these functions are called
     //=========================================================================
 
-    //When enemy collides
+    // When enemy collides
     void OnCollisionEnter2D(Collision2D col) {
     }
 
-    //When enemy exits collision
+    // When enemy exits collision
     void OnCollisionExit2D(Collision2D col) {
     }
 
     //=========================================================================
-    //Functions for ignoring collision between Enemy and other enemies
+    // Functions for ignoring collision between Enemy and other enemies
     //=========================================================================
 
     void initializeEnemyColliders() {
@@ -52,7 +44,7 @@ public class EnemyMovement : MonoBehaviour {
 
     // Checks all game objects in the scene for enemy and ignores collision with player
     void IgnoreEnemyCollision() {
-        foreach (GameObject obj in allObjects) {
+        foreach (GameObject obj in GameManager.allObjects) {
             if (obj.gameObject.tag == "Enemy") {
                 IgnoreCollision(obj);
             }

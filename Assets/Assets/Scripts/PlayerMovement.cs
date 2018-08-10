@@ -12,13 +12,10 @@ public class PlayerMovement : MonoBehaviour {
     GameObject player;
 
     List<BoxCollider2D> playerColliders = new List<BoxCollider2D>();
-    List<BoxCollider2D> enemyColliders = new List<BoxCollider2D>();
 
     SpriteRenderer spriteRenderer;
     Animator animator;
     bool isWalking = false; // Not actual animator parameter
-
-    List<GameObject> allObjects = new List<GameObject>();
 
     enum command {
         none,
@@ -39,10 +36,6 @@ public class PlayerMovement : MonoBehaviour {
         animator.SetFloat("Speed", (speed / speedDelta) * 25);
        
         InitializePlayerColliders();
-
-        // Initialize all GameObjects in scene
-        Scene scene = SceneManager.GetActiveScene();
-        scene.GetRootGameObjects(allObjects);
 
         IgnoreEnemyCollision();
     }
@@ -145,7 +138,7 @@ public class PlayerMovement : MonoBehaviour {
 
     // Checks all game objects in the scene for enemy and ignores collision with player
     void IgnoreEnemyCollision() {
-        foreach (GameObject obj in allObjects) {
+        foreach (GameObject obj in GameManager.allObjects) {
             if (obj.gameObject.tag == "Enemy") {
                 IgnoreCollision(obj);
             }
