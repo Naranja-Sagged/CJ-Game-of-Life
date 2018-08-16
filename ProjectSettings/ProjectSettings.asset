@@ -645,9 +645,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 
-  projectName: Template_2D
-  organizationId: 
+  cloudProjectId: d8bc417e-a97b-4c2e-84e2-ba2b32c58a1f
+  projectName: CJ Game of Life
+  organizationId: alexliuying
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
