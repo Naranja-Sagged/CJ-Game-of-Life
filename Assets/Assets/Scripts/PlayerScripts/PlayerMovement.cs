@@ -129,9 +129,23 @@ public class PlayerMovement : MonoBehaviour {
     //=========================================================================
 
     void InitializePlayerColliders() {
-        foreach (Transform child in transform) {
-            if (child.gameObject.GetComponent<BoxCollider2D>() != null) {
-                playerColliders.Add(child.gameObject.GetComponent<BoxCollider2D>());
+        foreach (Transform child in transform) { // Goes through every child object of enemy
+            if (child.gameObject.GetComponent<BoxCollider2D>() != null && !child.gameObject.GetComponent<BoxCollider2D>().isTrigger) { // Checks if object is a non-isTrigger collider
+                AddPlayerCollidersToList(child);
+            }
+        }
+    }
+
+    // Recursively checks if the child objects are colliders, and if so, add them to enemyColliders
+    void AddPlayerCollidersToList(Transform child) {
+        playerColliders.Add(child.gameObject.GetComponent<BoxCollider2D>()); // add 2 list :3
+
+        foreach (Transform grandChild in child) { // go deeper . . .
+            if (grandChild.gameObject.GetComponent<BoxCollider2D>() != null && !child.gameObject.GetComponent<BoxCollider2D>().isTrigger) { // Currently, grandchild (and beyond) colliders of enemy will always have non-isTrigger parents. Change if this fact changes.
+                AddPlayerCollidersToList(grandChild);
+            }
+            else {
+                continue;
             }
         }
     }
