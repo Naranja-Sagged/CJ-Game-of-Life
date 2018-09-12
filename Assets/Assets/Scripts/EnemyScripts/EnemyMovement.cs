@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        initializeEnemyColliders();
+        InitializeEnemyColliders();
         IgnoreEnemyCollision();
     }
 	
@@ -34,10 +34,24 @@ public class EnemyMovement : MonoBehaviour {
     // Functions for ignoring collision between Enemy and other enemies
     //=========================================================================
 
-    void initializeEnemyColliders() {
-        foreach (Transform child in transform) {
-            if (child.gameObject.GetComponent<BoxCollider2D>() != null) {
-                enemyColliders.Add(child.gameObject.GetComponent<BoxCollider2D>());
+    void InitializeEnemyColliders() {
+        foreach (Transform child in transform) { // Goes through every child object of enemy
+            if (child.gameObject.GetComponent<BoxCollider2D>() != null && !child.gameObject.GetComponent<BoxCollider2D>().isTrigger) { // Checks if object is a non-isTrigger collider
+                AddCollidersToList(child);
+            }
+        }
+    }
+
+    // Recursively checks if the child objects are colliders, and if so, add them to enemyColliders
+    void AddCollidersToList(Transform child) {
+        enemyColliders.Add(child.gameObject.GetComponent<BoxCollider2D>()); // add 2 list :3
+
+        foreach (Transform grandChild in child) { // go deeper . . .
+            if (grandChild.gameObject.GetComponent<BoxCollider2D>() != null && !child.gameObject.GetComponent<BoxCollider2D>().isTrigger) { // Currently, grandchild (and beyond) colliders of enemy will always have non-isTrigger parents. Change if this fact changes.
+                AddCollidersToList(grandChild);
+            }
+            else {
+                continue;
             }
         }
     }
